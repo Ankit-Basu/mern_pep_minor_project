@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard - Complaint Tracker</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <a href="/" class="logo">IssueTracker</a>
+        <div class="nav-links">
+          <a href="/" class="nav-link">Home</a>
+          <a href="/admin.html" class="nav-link active">Admin Dashboard</a>
+          <button id="themeToggle" class="btn-icon" aria-label="Toggle Theme">
+            🌙
+          </button>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="animate-fade-in">
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+          "
+        >
+          <h1>Admin Dashboard</h1>
+          <div style="display: flex; gap: 1rem">
+            <button
+              onclick="exportComplaints()"
+              class="btn btn-primary"
+              style="background: var(--success); border-color: var(--success)"
+            >
+              Export CSV
+            </button>
+            <button onclick="loadComplaints()" class="btn btn-primary">
+              Refresh List
+            </button>
+          </div>
+        </div>
+
+        <div class="stats-grid animate-fade-in" style="margin-bottom: 2rem">
+          <div class="stat-card">
+            <div class="stat-title">Total Issues</div>
+            <div class="stat-value" id="stat-total">0</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-title">Pending</div>
+            <div class="stat-value text-warning" id="stat-pending">0</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-title">Resolved</div>
+            <div class="stat-value text-success" id="stat-resolved">0</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-title">Rejected</div>
+            <div class="stat-value text-danger" id="stat-rejected">0</div>
+          </div>
+        </div>
+
+        <div
+          class="filters-container animate-fade-in"
+          style="
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: space-between;
+          "
+        >
+          <div style="flex: 1; min-width: 300px">
+            <input
+              type="text"
+              id="searchInput"
+              placeholder="Search by Name or Title..."
+              oninput="handleSearch(this.value)"
+            />
+          </div>
+          <div class="filter-buttons">
+            <button
+              onclick="filterComplaints('all')"
+              class="btn btn-filter active"
+              id="filter-all"
+            >
+              All
+            </button>
+            <button
+              onclick="filterComplaints('pending')"
+              class="btn btn-filter"
+              id="filter-pending"
+            >
+              Pending
+            </button>
+            <button
+              onclick="filterComplaints('high')"
+              class="btn btn-filter"
+              id="filter-high"
+            >
+              High Priority
+            </button>
+          </div>
+        </div>
+
+        <div
+          id="loading"
+          style="text-align: center; color: var(--text-muted); padding: 2rem"
+        >
+          Loading complaints...
+        </div>
+        <div id="complaintsList" class="complaint-grid"></div>
+      </div>
+    </main>
+
+    <div id="notification" class="notification"></div>
+    <script src="script.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", loadComplaints);
+    </script>
+  </body>
+</html>
